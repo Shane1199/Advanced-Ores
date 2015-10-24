@@ -1,0 +1,4 @@
+-Slightly improved startup time & performance
+-Updated the version number
+-Minor code improvements
+-Minor changes in the help
