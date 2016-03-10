@@ -1,3 +1,4 @@
-Requirements:
+**Advanced Ores**
 
-Before installing this plugin, you will need Skript & WildSkript.
+**Requirements:**
+Before installing this plugin, you will need Skript, WildSkript, & skQuery.
