@@ -462,7 +462,7 @@ on load:
 	if folder "plugins/AdvancedOres/" doesn't exists:
 		create folder "plugins/AdvancedOres"
 		if {ao::command::debug} is true:
-			log "Created Advanced Ores folder." to "Advanced Ores/debug.log"
+			log "Created Advanced Ores folder." to "AdvancedOres/debug.log"
 	if file "plugins/AdvancedOres/messages.yml" doesn't exists:
 		create file "plugins/AdvancedOres/messages.yml"
 		wf "  ## Edit rewards here: plugins/Skript/scripts/AdvancedOres.sk" to "plugins/AdvancedOres/messages.yml"
@@ -477,11 +477,11 @@ on load:
 		wf "message: '&6You randomly found&c'" to "plugins/AdvancedOres/messages.yml"
 		wf "messagepart2: '&6while mining!'" to "plugins/AdvancedOres/messages.yml"
 		wf "reload: '&cAdvanced Ores &ahas been Reloaded.'" to "plugins/AdvancedOres/messages.yml"
-		wf "debug: '&6Debug&7:'" to "plugins/AdvancedOres/messages.yml"
+		wf "debug: '&6Debug&7'" to "plugins/AdvancedOres/messages.yml"
 		wf "on: '&eOn'" to "plugins/AdvancedOres/messages.yml"
 		wf "off: '&eOff'" to "plugins/AdvancedOres/messages.yml"
 		if {ao::command::debug} is true:
-			log "Created messages.yml file." to "Advanced Ores/debug.log"
+			log "Created messages.yml file." to "AdvancedOres/debug.log"
 	else:
 		set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::prefix} is not set:
@@ -494,77 +494,77 @@ on load:
 
 
 
-
 			send "[AO] Error Messages.yml prefix was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "prefix incorrectly configured." to "Advanced Ores/debug.log"
+				log "prefix incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"	
 		if {ao::messages::broadcastplayercolor} is not set:
 			wf "broadcastplayercolor: '&a'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml broadcastplayercolor was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "broadcastplayercolor incorrectly configured." to "Advanced Ores/debug.log"
+				log "broadcastplayercolor incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"	
 		if {ao::messages::broadcast} is not set:
 			wf "broadcast: '&9has randomly received&c'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml broadcast was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "broadcast incorrectly configured." to "Advanced Ores/debug.log"
+				log "broadcast incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::broadcastpart2} to colored value "broadcastpart2" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::broadcastpart2} is not set:
 			wf "broadcastpart2: '&9while mining!'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::broadcastpart2} to colored value "broadcastpart2" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml broadcastpart2 was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "broadcastpart2 incorrectly configured." to "Advanced Ores/debug.log"
+				log "broadcastpart2 incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"	
 		if {ao::messages::message} is not set:
 			wf "message: '&6You randomly found&c'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml message was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "message incorrectly configured." to "Advanced Ores/debug.log"
+				log "message incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::messagepart2} to colored value "messagepart2" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::messagepart2} is not set:
 			wf "messagepart2: '&6while mining!'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::messagepart2} to colored value "messagepart2" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml messagepart2 was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "messagepart2 incorrectly configured." to "Advanced Ores/debug.log"
+				log "messagepart2 incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::reload} to colored value "reload" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::reload} is not set:
 			wf "reload: '&cAdvanced Ores &ahas been Reloaded.'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::reload} to colored value "reload" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml reload was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "reload incorrectly configured." to "Advanced Ores/debug.log"
+				log "reload incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::debug} to colored value "debug" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::debug}  is not set:
-			wf "debug: '&6Debug&7:'" to "plugins/AdvancedOres/messages.yml"
+			wf "debug: '&6Debug&7'" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::debug} to colored value "debug" get of "plugins/AdvancedOres/messages.yml"
 			send "[AO] Error Messages.yml debug was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
-				log "debug incorrectly configured." to "Advanced Ores/debug.log"
+				log "debug incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
-		if {ao::messages::on} is not set:
-			wf "on: '&eOn:'" to "plugins/AdvancedOres/messages.yml"
-			set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
-			send "[AO] Error Messages.yml on was incorrectly configured! Reverting to default" to console
-			if {ao::command::debug} is true:
-				log "on incorrectly configured." to "Advanced Ores/debug.log"
+
+# Keeps re-entering...
+#		if {ao::messages::on}  is not set:
+#			wf "on: '&eOn'" to "plugins/AdvancedOres/messages.yml"
+#			set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
+#			send "[AO] Error Messages.yml on was incorrectly configured! Reverting to default" to console
+#			if {ao::command::on} is true:
+#				log "on incorrectly configured." to "AdvancedOres/debug.log"
 		set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
-		if {ao::messages::off} is not set:
-			wf "off: '&eOff:'" to "plugins/AdvancedOres/messages.yml"
-			set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
-			send "[AO] Error Messages.yml off was incorrectly configured! Reverting to default" to console
-			if {ao::command::debug} is true:
-				log "off incorrectly configured." to "Advanced Ores/debug.log"
-	if {ao::messages::locationcolor} is set:
-		clear {ao::messages::locationcolor}
+#		if {ao::messages::off}  is not set:
+#			wf "off: '&eOff'" to "plugins/AdvancedOres/messages.yml"
+#			set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
+#			send "[AO] Error Messages.yml off was incorrectly configured! Reverting to default" to console
+#			if {ao::command::off} is true:
+#				log "off incorrectly configured." to "AdvancedOres/debug.log"
+	clear {ao::messages::locationcolor}
 	if {ao::command::debug} is true:
-		log "Set variables for messages." to "Advanced Ores/debug.log"
+		log "Set variables for messages." to "AdvancedOres/debug.log"
 	if file "plugins/AdvancedOres/config.yml" doesn't exists:
 		create file "plugins/AdvancedOres/config.yml"
 		wf "  ## Edit rewards here: plugins/Skript/scripts/AdvancedOres.sk" to "plugins/AdvancedOres/config.yml"
@@ -594,46 +594,46 @@ on load:
 		wf "excluderegion: false" to "plugins/AdvancedOres/config.yml"
 		wf "excluded-regions: 'Spawn, Spawn2, NoMineHere, SafeZone'" to "plugins/AdvancedOres/config.yml"
 		if {ao::command::debug} is true:
-			log "Created config.yml file." to "Advanced Ores/debug.log"
+			log "Created config.yml file." to "AdvancedOres/debug.log"
 	set {ao::config::check-for-updates} to colored value "check-for-updates" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::check-for-updates} is not set:
 		wf "check-for-updates: true" to "plugins/AdvancedOres/config.yml"
 		set {ao::config::check-for-updates} to colored value "check-for-updates" get of "plugins/AdvancedOres/config.yml"
 		send "[AO] Error Config.yml check-for-updates was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
-			log "check-for-updates incorrectly configured." to "Advanced Ores/debug.log"
+			log "check-for-updates incorrectly configured." to "AdvancedOres/debug.log"
 	set {ao::config::block-creative} to colored value "block-creative" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::block-creative} is not set:
 		wf "block-creative: true" to "plugins/AdvancedOres/config.yml"
 		set {ao::config::block-creative} to colored value "block-creative" get of "plugins/AdvancedOres/config.yml"
 		send "[AO] Error Config.yml block-creative was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
-			log "block-creative incorrectly configured." to "Advanced Ores/debug.log"
+			log "block-creative incorrectly configured." to "AdvancedOres/debug.log"
 	set {ao::config::dollar-sign-before} to colored value "dollar-sign-before" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::dollar-sign-before} is not set:
 		wf "dollar-sign-before: true" to "plugins/AdvancedOres/config.yml"
 		set {ao::config::dollar-sign-before} to colored value "dollar-sign-before" get of "plugins/AdvancedOres/config.yml"
 		send "[AO] Error Config.yml dollar-sign-before was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
-			log "dollar-sign-before incorrectly configured." to "Advanced Ores/debug.log"
+			log "dollar-sign-before incorrectly configured." to "AdvancedOres/debug.log"
 	set {ao::config::excluderegion} to colored value "excluderegion" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::excluderegion} is not set:
 		wf "excluderegion: true" to "plugins/AdvancedOres/config.yml"
 		set {ao::config::excluderegion} to colored value "excluderegion" get of "plugins/AdvancedOres/config.yml"
 		send "[AO] Error Config.yml excluderegion was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
-			log "excluderegion incorrectly configured." to "Advanced Ores/debug.log"
+			log "excluderegion incorrectly configured." to "AdvancedOres/debug.log"
 	set {ao::config::excluded-regions} to colored value "excluded-regions" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::excluded-regions} is not set:
 		wf "excluded-regions: true" to "plugins/AdvancedOres/config.yml"
 		set {ao::config::excluded-regions} to colored value "excluded-regions" get of "plugins/AdvancedOres/config.yml"
 		send "[AO] Error Config.yml excluded-regions was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
-			log "excluded-regions incorrectly configured." to "Advanced Ores/debug.log"
+			log "excluded-regions incorrectly configured." to "AdvancedOres/debug.log"
 	if {ao::command::debug} is true:
-		log "Set variables for config." to "Advanced Ores/debug.log"
-		log "Minecraft: %minecraft version%" to "Advanced Ores/debug.log"
-#		log "Java: %java version%" to "Advanced Ores/debug.log"
+		log "Set variables for config." to "AdvancedOres/debug.log"
+		log "Minecraft: %minecraft version%" to "AdvancedOres/debug.log"
+#		log "Java: %java version%" to "AdvancedOres/debug.log"
 	set {_plugins::*} to files in "plugins"
 	loop {_plugins::*}:
 		if "%loop-value%" contains ".jar":
@@ -648,51 +648,51 @@ on load:
 		send "[AO] SkQuery %skquery version% found, successfully hooked." to console
 		set {_nojar} to false
 		if {ao::command::debug} is true:
-			log "skQuery %skquery version%" to "Advanced Ores/debug.log"
+			log "skQuery %skquery version%" to "AdvancedOres/debug.log"
 	if {_nojar} is true:
 		execute command "/skript disable Advanced Ores.sk"
 		send "[AO] Error SkQuery.jar was not found! Please install that plugin." to console
 		send "[AO] Disabling Advanced Ores! Issue found above." to console
 		if {ao::command::debug} is true:
-			log "Missing skQuery!" to "Advanced Ores/debug.log"
+			log "Missing skQuery!" to "AdvancedOres/debug.log"
 		set {_nojar} to false
 	if "%{_jars::*}%" contains "wildskript":
 		send "[AO] WildSkript %wildskript version% found, successfully hooked." to console
 		set {_nojar} to false
 		if {ao::command::debug} is true:
-			log "WildSkript %wildskript version%" to "Advanced Ores/debug.log"
+			log "WildSkript %wildskript version%" to "AdvancedOres/debug.log"
 	if {_nojar} is true:
 		send "[AO] Error WildSkript.jar was not found! Please install that plugin." to console
 		send "[AO] Disabling Advanced Ores! Issue found above." to console
 		if {ao::command::debug} is true:
-			log "Missing WildSkript!" to "Advanced Ores/debug.log"
+			log "Missing WildSkript!" to "AdvancedOres/debug.log"
 		set {_nojar} to false
 	if "%{_jars::*}%" contains "vault":
 		send "[AO] Vault found, successfully hooked." to console
 		if {ao::command::debug} is true:
-			log "Vault found and hooked." to "Advanced Ores/debug.log"
+			log "Vault found and hooked." to "AdvancedOres/debug.log"
 		set {_nojar} to false
 	if {_nojar} is true:
 		send "[AO] Error Vault.jar was not found! Economy features will not work." to console
 		if {ao::command::debug} is true:
-			log "Missing Vault!" to "Advanced Ores/debug.log"
+			log "Missing Vault!" to "AdvancedOres/debug.log"
 		set {_nojar} to false
 	if "%{_jars::*}%" contains "worldedit":
 		send "[AO] WARNING: WorldEdit found. AO will not run for players that have Super Pickaxe enabled." to console
 		set {_nojar} to false
 		if {ao::command::debug} is true:
-			log "WorldEdit found. Super Pickaxe enabled players will not be able to be rewarded/punished." to "Advanced Ores/debug.log"
+			log "WorldEdit found. Super Pickaxe enabled players will not be able to be rewarded/punished." to "AdvancedOres/debug.log"
 	if {_nojar} is true:
 		if {ao::command::debug} is true:
-			log "No WorldEdit active." to "Advanced Ores/debug.log"
-	send "=======================" to console
+			log "No WorldEdit active." to "AdvancedOres/debug.log"
+	send "==========================" to console
 	clear {_plugins::*}
 	clear {_jars::*}
 	clear {_nojar}
 	if {ao::command::debug} is true:
-		log "Advanced Ores {@Version} has successfully loaded." to "Advanced Ores/debug.log"
-		log "Minecraft %minecraft version%" to "Advanced Ores/debug.log"
-		log "Skript %skript version%" to "Advanced Ores/debug.log"
+		log "Advanced Ores {@Version} has successfully loaded." to "AdvancedOres/debug.log"
+		log "Minecraft %minecraft version%" to "AdvancedOres/debug.log"
+		log "Skript %skript version%" to "AdvancedOres/debug.log"
 		send "[AO] Debug Mode is Enabled." to console
 	send "Advanced Ores {@Version} (By: Shane1199) has successfully loaded." to console
 	if {ao::config::check-for-updates} is true:
@@ -701,22 +701,28 @@ on load:
 				message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
 				message "&bhttps://github.com/Shane1199/Advanced-Ores/releases"
 				if {ao::command::debug} is true:
-					log "Advanced Ores {@Version} is outdated" to "Advanced Ores/debug.log"
+					log "Advanced Ores {@Version} is outdated" to "AdvancedOres/debug.log"
+				if {ao::config::dev-auto-update} is true:
+					send "[AO] {@Updating}" to console
+					download from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Advanced%20Ores.sk" to file "plugins/Skript/scripts/Advanced Ores.sk"
+#					evaluate "download from ""https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Advanced%20Ores.sk"" to ""plugins/Skript/scripts/Advanced Ores.sk"""
+					wait 2 ticks
+					load script from file "plugins/Skript/scripts/Advanced Ores.sk"
+#					execute console command "/skript reload Advanced Ores.sk"
+					send "[AO] {@UpdateFinish}" to console
 		else:
 			if text from "https://raw.githubusercontent.com/Shane1199/AdvancedOres/master/Version.txt" is not "{@Version}":
 				message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
 				message "&bhttps://www.spigotmc.org/resources/17673/updates"
 				if {ao::command::debug} is true:
-					log "Advanced Ores {@Version} is outdated" to "Advanced Ores/debug.log"
+					log "Advanced Ores {@Version} is outdated" to "AdvancedOres/debug.log"
 command /aaom:
 	executable by: console
 	trigger:
 		send "[AO] Error Messages.yml %{ao::c::aaom}% was incorrectly configured! Reverting back to the default setting." to console
 		if {ao::command::debug} is true:
-			log "Messages.yml %{ao::c::aaom}% incorrectly configured." to "Advanced Ores/debug.log"
+			log "Messages.yml %{ao::c::aaom}% incorrectly configured." to "AdvancedOres/debug.log"
 		clear {ao::c::aaom}
-
-
 
 
 
@@ -724,36 +730,36 @@ command /aaom:
 
 on unload:
 	if {ao::command::debug} is true:
-		log "Advanced Ores has Stopped." to "Advanced Ores/debug.log"
+		log "Advanced Ores has Stopped." to "AdvancedOres/debug.log"
 	send "[AO] Advanced Ores has Stopped" to console
 command /advancedores <text>:
 	description: Advanced Ores Commands
 	usage: &6/advancedores <help/reload/debug>
 	aliases: /ao, /advancedore
+	executable by: players, console
 	trigger:
 		if arg 1 is "help" or "h":
 			player has permission "ao.staff.ao" or "ao.staff.*" or "ao.*":
-				message "&6&m-------------------------------------------------"
-				message "&c&lAdvanced Ores &e&l{@Version} &f&l- By Shane1199"
-				message "&eCommands:"
+				message "&4&m-------------------------------------------------"
+				message "&cAdvanced Ores &b{@Version}"
 				message "&6/ao help: &f(/ao h)&r Is this command"
-				message "&6/ao reload:&r Reloads"
+				message "&6/ao reload: &f(/ao r)&r Reloads"
 				message "&6/ao debug: &f(/ao d)&r Debug"
-				message "&6&m-------------------------------------------------"
+				message "&4&m-------------------------------------------------"
 		else if arg 1 is "reload" or "r":
 			player has permission "ao.staff.reload" or "ao.staff.*" or "ao.*":
 				execute command "/skript reload Advanced Ores.sk"
 				message "%{ao::messages::reload}%"
 		else if arg 1 is "debug" or "d":
 			player has permission "ao.staff.debug" or "ao.staff.*" or "ao.*":
-				if {ao::command::debug} is false:
+				if {ao::command::debug} is not set:
 					set {ao::command::debug} to true
-					message "%{ao::messages::debug}% %{ao::messages::on}%"
-					log "Debug Enabled!" to "Advanced Ores/debug.log"
+					message "%{ao::messages::debug}%: %{ao::messages::on}%"
+					log "Debug Enabled!" to "AdvancedOres/debug.log"
 				else if {ao::command::debug} is true:
-					set {ao::command::debug} to false
-					message "%{ao::messages::debug}% %{ao::messages::off}%"
-					log "Debug Disabled!" to "Advanced Ores/debug.log"
+					clear {ao::command::debug}
+					message "%{ao::messages::debug}%: %{ao::messages::off}%"
+					log "Debug Disabled!" to "AdvancedOres/debug.log"
 on tab completer for "/advancedores":
 	if argument at 1 is "":
 		add "help" to completions
@@ -761,7 +767,7 @@ on tab completer for "/advancedores":
 		add "debug" to completions
 on mine of any ore:
 	if {ao::command::debug} is true:
-		log "Ore was mined. %time%, %block%, %location%, %world%" to "Advanced Ores/debug.log"
+		log "Ore was mined. %time%, %block%, %location%, %world%" to "AdvancedOres/debug.log"
 	if {ao::config::excluderegion} is true:
 # Figure the cancel out ... no breaking ores outside of regions
 		if "%region at player%" contains "{ao::config::excluded-regions}":
