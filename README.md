@@ -2,7 +2,7 @@
 
 Download: https://github.com/Shane1199/Advanced-Ores/releases
 
-SUPPORT, REPORT BUGS, & SUGGEST FEATURES > ISSUES TAB
+Support, Report Bugs, Suggest Features in the Issues Tab
 
 
 
