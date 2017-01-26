@@ -445,18 +445,21 @@ Options:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # #                     # # #                     # #
 
+# Need testing for:
 on join:
 	player has permission "ao.staff.update" or "ao.staff.*" or "ao.*":
 		if {ao::config::check-for-updates} is true:
-			wait 20 ticks
-			if {@Version} contains "git":
-				if text from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Git-Version.txt" is not "{@Version}":
-					message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
-					message "&bhttps://github.com/Shane1199/Advanced-Ores/releases"
-			else:
-				if text from "https://raw.githubusercontent.com/Shane1199/AdvancedOres/master/Version.txt" is not "{@Version}":
-					message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
-					message "&bhttps://www.spigotmc.org/resources/17673/updates"
+			if {ao::update-check-player-times::%player%}<2:
+				add 1 to {ao::update-check-player-times::%player%}
+				wait 20 ticks
+				if {@Version} contains "git":
+					if text from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Git-Version.txt" is not "{@Version}":
+						message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
+						message "&bhttps://github.com/Shane1199/Advanced-Ores/releases"
+				else:
+					if text from "https://raw.githubusercontent.com/Shane1199/AdvancedOres/master/Version.txt" is not "{@Version}":
+						message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
+						message "&bhttps://www.spigotmc.org/resources/17673/updates"
 on load:
 	send "[AO] Advanced Ores is Loading..." to console
 	if folder "plugins/AdvancedOres/" doesn't exists:
@@ -483,17 +486,14 @@ on load:
 		if {ao::command::debug} is true:
 			log "Created messages.yml file." to "AdvancedOres/debug.log"
 	else:
+# Need to test Config issues and if Smart Config works
+# Need to test if the optimization below, after ^ works first.
 		set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
 		if {ao::messages::prefix} is not set:
 			wf "prefix: '&cAO > '" to "plugins/AdvancedOres/messages.yml"
 			set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
 			set {ao::c::aaom} to "prefix"
 			execute console command "aaom"
-
-
-
-
-
 			send "[AO] Error Messages.yml prefix was incorrectly configured! Reverting to default" to console
 			if {ao::command::debug} is true:
 				log "prefix incorrectly configured." to "AdvancedOres/debug.log"
@@ -562,7 +562,6 @@ on load:
 #			send "[AO] Error Messages.yml off was incorrectly configured! Reverting to default" to console
 #			if {ao::command::off} is true:
 #				log "off incorrectly configured." to "AdvancedOres/debug.log"
-	clear {ao::messages::locationcolor}
 	if {ao::command::debug} is true:
 		log "Set variables for messages." to "AdvancedOres/debug.log"
 	if file "plugins/AdvancedOres/config.yml" doesn't exists:
@@ -580,21 +579,14 @@ on load:
 		wf "check-for-updates: true" to "plugins/AdvancedOres/config.yml"
 		wf "update-check-player-times: '2'" to "plugins/AdvancedOres/config.yml"
 		wf "dev-auto-update: false" to "plugins/AdvancedOres/config.yml"
-
-
-
-
 		wf "block-creative: false" to "plugins/AdvancedOres/config.yml"
 		wf "dollar-sign-before: true" to "plugins/AdvancedOres/config.yml"
-
-
-
-
 # REMOVE ExcludeRegion option, replace it with a world option.
 		wf "excluderegion: false" to "plugins/AdvancedOres/config.yml"
 		wf "excluded-regions: 'Spawn, Spawn2, NoMineHere, SafeZone'" to "plugins/AdvancedOres/config.yml"
 		if {ao::command::debug} is true:
 			log "Created config.yml file." to "AdvancedOres/debug.log"
+# Need to test Config issues and if Smart Config works
 	set {ao::config::check-for-updates} to colored value "check-for-updates" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::check-for-updates} is not set:
 		wf "check-for-updates: true" to "plugins/AdvancedOres/config.yml"
@@ -602,6 +594,20 @@ on load:
 		send "[AO] Error Config.yml check-for-updates was incorrectly configured! Reverting to default" to console
 		if {ao::command::debug} is true:
 			log "check-for-updates incorrectly configured." to "AdvancedOres/debug.log"
+	set {ao::config::update-check-player-times} to colored value "update-check-player-times" get of "plugins/AdvancedOres/config.yml"
+	if {ao::config::update-check-player-times} is not set:
+		wf "update-check-player-times: '2'" to "plugins/AdvancedOres/config.yml"
+		set {ao::config::update-check-player-times} to colored value "update-check-player-times" get of "plugins/AdvancedOres/config.yml"
+		send "[AO] Error Config.yml update-check-player-times was incorrectly configured! Reverting to default" to console
+		if {ao::command::debug} is true:
+			log "update-check-player-times incorrectly configured." to "AdvancedOres/debug.log"
+	set {ao::config::dev-auto-update} to colored value "check-for-updates" get of "plugins/AdvancedOres/config.yml"
+	if {ao::config::dev-auto-update is not set:
+		wf "dev-auto-update: false" to "plugins/AdvancedOres/config.yml"
+		set {ao::config::dev-auto-update} to colored value "dev-auto-update" get of "plugins/AdvancedOres/config.yml"
+		send "[AO] Error Config.yml dev-auto-update was incorrectly configured! Reverting to default" to console
+		if {ao::command::debug} is true:
+			log "dev-auto-update incorrectly configured." to "AdvancedOres/debug.log"
 	set {ao::config::block-creative} to colored value "block-creative" get of "plugins/AdvancedOres/config.yml"
 	if {ao::config::block-creative} is not set:
 		wf "block-creative: true" to "plugins/AdvancedOres/config.yml"
@@ -632,8 +638,14 @@ on load:
 			log "excluded-regions incorrectly configured." to "AdvancedOres/debug.log"
 	if {ao::command::debug} is true:
 		log "Set variables for config." to "AdvancedOres/debug.log"
+		log "AO: %{@Version}%"
 		log "Minecraft: %minecraft version%" to "AdvancedOres/debug.log"
+# Need to test:
+#		log "Bukkit: %bukkit version%"
+#		log "Spigot: %spigot version%"
 #		log "Java: %java version%" to "AdvancedOres/debug.log"
+#		set {_JVersion} to java version
+#		log "Java: %{_JVersion}%" to "AdvancedOres/debug.log"
 	set {_plugins::*} to files in "plugins"
 	loop {_plugins::*}:
 		if "%loop-value%" contains ".jar":
@@ -691,10 +703,9 @@ on load:
 	clear {_nojar}
 	if {ao::command::debug} is true:
 		log "Advanced Ores {@Version} has successfully loaded." to "AdvancedOres/debug.log"
-		log "Minecraft %minecraft version%" to "AdvancedOres/debug.log"
-		log "Skript %skript version%" to "AdvancedOres/debug.log"
 		send "[AO] Debug Mode is Enabled." to console
 	send "Advanced Ores {@Version} (By: Shane1199) has successfully loaded." to console
+# Need testing for:
 	if {ao::config::check-for-updates} is true:
 		if {@Version} contains "git":
 			if text from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Git-Version.txt" is not "{@Version}":
@@ -716,6 +727,8 @@ on load:
 				message "&bhttps://www.spigotmc.org/resources/17673/updates"
 				if {ao::command::debug} is true:
 					log "Advanced Ores {@Version} is outdated" to "AdvancedOres/debug.log"
+	clear {ao::update-check-player-times::*}
+# Need testing for:
 command /aaom:
 	executable by: console
 	trigger:
@@ -723,11 +736,6 @@ command /aaom:
 		if {ao::command::debug} is true:
 			log "Messages.yml %{ao::c::aaom}% incorrectly configured." to "AdvancedOres/debug.log"
 		clear {ao::c::aaom}
-
-
-
-
-
 on unload:
 	if {ao::command::debug} is true:
 		log "Advanced Ores has Stopped." to "AdvancedOres/debug.log"
