@@ -273,8 +273,70 @@ Options:
 	coal-particle: false
 	coal-particle-type: smoke
 	coal-particle-time: 5
-	
-# emerald and Quartz Ore support will be added in a future update, there is currently a bug.
+
+# = = = = = E M E R A L D = = = = = #
+
+	emerald-name: 100 dollars
+	emerald-permission: ao.emerald
+	emerald-chance: 0%
+	emerald-amount: 64
+	emerald-reward: cookies
+	emerald-drop: false
+	emerald-give: false
+	emerald-add-money: true
+	emerald-remove-money: false
+	emerald-command: false
+	emerald-command-type: /give %player% dirt 1
+	emerald-give-effect: false
+	emerald-give-effect-type: haste
+	emerald-give-effect-time: 15 seconds
+	emerald-give-effect-no-stack: false
+	emerald-remove-effect: false
+	emerald-remove-effect-type: haste
+	emerald-remove-all-effects: false
+	emerald-broadcast: true
+	emerald-sound: true
+	emerald-sound-type: mob.chicken.plop
+	emerald-sound-pitch: 1
+	emerald-sound-volume: 10
+	emerald-firework: true
+	emerald-firework-type: creeper
+	emerald-firework-color: green
+	emerald-particle: false
+	emerald-particle-type: smoke
+	emerald-particle-time: 5
+
+# = = = = = Q U A R T Z = = = = = #
+
+	quartz-name: 100 dollars
+	quartz-permission: ao.quartz
+	quartz-chance: 0%
+	quartz-amount: 64
+	quartz-reward: cookies
+	quartz-drop: false
+	quartz-give: false
+	quartz-add-money: true
+	quartz-remove-money: false
+	quartz-command: false
+	quartz-command-type: /give %player% dirt 1
+	quartz-give-effect: false
+	quartz-give-effect-type: haste
+	quartz-give-effect-time: 15 seconds
+	quartz-give-effect-no-stack: false
+	quartz-remove-effect: false
+	quartz-remove-effect-type: haste
+	quartz-remove-all-effects: false
+	quartz-broadcast: true
+	quartz-sound: true
+	quartz-sound-type: mob.chicken.plop
+	quartz-sound-pitch: 1
+	quartz-sound-volume: 10
+	quartz-firework: true
+	quartz-firework-type: creeper
+	quartz-firework-color: green
+	quartz-particle: false
+	quartz-particle-type: smoke
+	quartz-particle-time: 5
 
 
 
@@ -387,7 +449,7 @@ on join:
 	player has permission "ao.staff.update" or "ao.staff.*" or "ao.*":
 		if {ao::config::check-for-updates} is true:
 			wait 20 ticks
-			if {@Version} contains "-git":
+			if {@Version} contains "git":
 				if text from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Git-Version.txt" is not "{@Version}":
 					message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
 					message "&bhttps://github.com/Shane1199/Advanced-Ores/releases"
@@ -416,88 +478,89 @@ on load:
 		wf "messagepart2: '&6while mining!'" to "plugins/AdvancedOres/messages.yml"
 		wf "reload: '&cAdvanced Ores &ahas been Reloaded.'" to "plugins/AdvancedOres/messages.yml"
 		wf "debug: '&6Debug&7:'" to "plugins/AdvancedOres/messages.yml"
-		wf "on: '&eOn:'" to "plugins/AdvancedOres/messages.yml"
-		wf "off: '&eOff:'" to "plugins/AdvancedOres/messages.yml"
+		wf "on: '&eOn'" to "plugins/AdvancedOres/messages.yml"
+		wf "off: '&eOff'" to "plugins/AdvancedOres/messages.yml"
 		if {ao::command::debug} is true:
 			log "Created messages.yml file." to "Advanced Ores/debug.log"
-	set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::prefix} is not set:
-		wf "prefix: '&cAO > '" to "plugins/AdvancedOres/messages.yml"
+	else:
 		set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
-		set {ao::c::aaom} to "prefix"
-		execute console command "aaom"
+		if {ao::messages::prefix} is not set:
+			wf "prefix: '&cAO > '" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::prefix} to colored value "prefix" get of "plugins/AdvancedOres/messages.yml"
+			set {ao::c::aaom} to "prefix"
+			execute console command "aaom"
 
 
 
 
 
 
-		send "[AO] Error Messages.yml prefix was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "prefix incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"	
-	if {ao::messages::broadcastplayercolor} is not set:
-		wf "broadcastplayercolor: '&a'" to "plugins/AdvancedOres/messages.yml"
-		set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml broadcastplayercolor was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "broadcastplayercolor incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"	
-	if {ao::messages::broadcast} is not set:
-		wf "broadcast: '&9has randomly received&c'" to "plugins/AdvancedOres/messages.yml"
-		set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml broadcast was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "broadcast incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::broadcastpart2} to colored value "broadcastpart2" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::broadcastpart2} is not set:
-		wf "broadcastpart2: '&9while mining!'" to "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml prefix was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "prefix incorrectly configured." to "Advanced Ores/debug.log"
+		set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"	
+		if {ao::messages::broadcastplayercolor} is not set:
+			wf "broadcastplayercolor: '&a'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::broadcastplayercolor} to colored value "broadcastplayercolor" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml broadcastplayercolor was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "broadcastplayercolor incorrectly configured." to "Advanced Ores/debug.log"
+		set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"	
+		if {ao::messages::broadcast} is not set:
+			wf "broadcast: '&9has randomly received&c'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::broadcast} to colored value "broadcast" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml broadcast was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "broadcast incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::broadcastpart2} to colored value "broadcastpart2" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml broadcastpart2 was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "broadcastpart2 incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"	
-	if {ao::messages::message} is not set:
-		wf "message: '&6You randomly found&c'" to "plugins/AdvancedOres/messages.yml"
-		set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml message was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "message incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::messagepart2} to colored value "messagepart2" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::messagepart2} is not set:
-		wf "messagepart2: '&6while mining!'" to "plugins/AdvancedOres/messages.yml"
+		if {ao::messages::broadcastpart2} is not set:
+			wf "broadcastpart2: '&9while mining!'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::broadcastpart2} to colored value "broadcastpart2" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml broadcastpart2 was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "broadcastpart2 incorrectly configured." to "Advanced Ores/debug.log"
+		set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"	
+		if {ao::messages::message} is not set:
+			wf "message: '&6You randomly found&c'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::message} to colored value "message" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml message was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "message incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::messagepart2} to colored value "messagepart2" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml messagepart2 was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "messagepart2 incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::reload} to colored value "reload" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::reload} is not set:
-		wf "reload: '&cAdvanced Ores &ahas been Reloaded.'" to "plugins/AdvancedOres/messages.yml"
+		if {ao::messages::messagepart2} is not set:
+			wf "messagepart2: '&6while mining!'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::messagepart2} to colored value "messagepart2" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml messagepart2 was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "messagepart2 incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::reload} to colored value "reload" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml reload was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "reload incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::debug} to colored value "debug" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::debug}  is not set:
-		wf "debug: '&6Debug&7:'" to "plugins/AdvancedOres/messages.yml"
+		if {ao::messages::reload} is not set:
+			wf "reload: '&cAdvanced Ores &ahas been Reloaded.'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::reload} to colored value "reload" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml reload was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "reload incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::debug} to colored value "debug" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml debug was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "debug incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::on} is not set:
-		wf "on: '&eOn:'" to "plugins/AdvancedOres/messages.yml"
+		if {ao::messages::debug}  is not set:
+			wf "debug: '&6Debug&7:'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::debug} to colored value "debug" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml debug was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "debug incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml on was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "on incorrectly configured." to "Advanced Ores/debug.log"
-	set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
-	if {ao::messages::off} is not set:
-		wf "off: '&eOff:'" to "plugins/AdvancedOres/messages.yml"
+		if {ao::messages::on} is not set:
+			wf "on: '&eOn:'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::on} to colored value "on" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml on was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "on incorrectly configured." to "Advanced Ores/debug.log"
 		set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
-		send "[AO] Error Messages.yml off was incorrectly configured! Reverting to default" to console
-		if {ao::command::debug} is true:
-			log "off incorrectly configured." to "Advanced Ores/debug.log"
+		if {ao::messages::off} is not set:
+			wf "off: '&eOff:'" to "plugins/AdvancedOres/messages.yml"
+			set {ao::messages::off} to colored value "off" get of "plugins/AdvancedOres/messages.yml"
+			send "[AO] Error Messages.yml off was incorrectly configured! Reverting to default" to console
+			if {ao::command::debug} is true:
+				log "off incorrectly configured." to "Advanced Ores/debug.log"
 	if {ao::messages::locationcolor} is set:
 		clear {ao::messages::locationcolor}
 	if {ao::command::debug} is true:
@@ -633,7 +696,7 @@ on load:
 		send "[AO] Debug Mode is Enabled." to console
 	send "Advanced Ores {@Version} (By: Shane1199) has successfully loaded." to console
 	if {ao::config::check-for-updates} is true:
-		if {@Version} contains "-git":
+		if {@Version} contains "git":
 			if text from "https://raw.githubusercontent.com/Shane1199/Advanced-Ores/master/Git-Version.txt" is not "{@Version}":
 				message "%{ao::messages::prefix}% &cUh oh, Advanced Ores is outdated!"
 				message "&bhttps://github.com/Shane1199/Advanced-Ores/releases"
@@ -3924,4 +3987,926 @@ on mine of coal ore:
 							loop all players:
 								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
 									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@coal-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+on mine of emerald ore:
+	if {ao::config::excluderegion} is true:
+# Figure the cancel out ... no breaking ores outside of regions
+		if "%region at player%" contains "{ao::config::excluded-regions}":
+			cancel event
+		else:
+			player has permission "{@emerald-permission}" or "ao.*" or "ao.player.*":
+				chance of {@emerald-chance}:
+					if {ao::config::block-creative} is true:
+						player's gamemode is not creative:
+							if {@emerald-sound} is true:
+								play raw sound "{@emerald-sound-type}" at player with pitch {@emerald-sound-pitch} volume {@emerald-sound-volume}
+							if {@emerald-remove-effect} is true:
+								remove {@emerald-remove-effect-type} from the player
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@emerald-remove-effect-type} removed" to "Advanced Ores/log.log"
+							if {@emerald-remove-all-effects} is true:
+								execute console command "effect %player% clear"
+							if {@emerald-give-effect} is true:
+								if {@emerald-give-effect-no-stack} is true:
+									if player does not have {@emerald-give-effect-type}:
+										apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+										if {ao::config::logrewards} is true:
+											log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+										if {ao.notifyreward.%player%} is true:
+											loop all players:
+												if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+													send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+											stop
+								else:
+									apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							if {@emerald-firework} is true:
+								launch {@emerald-firework-type} firework colored {@emerald-firework-color} at player timed 1
+							if {@emerald-particle} is true:
+								set {ao.loc.%player%} to location
+								spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+								wait {@emerald-particle-time} ticks
+								spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+								wait {@emerald-particle-time} ticks
+								spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+								wait {@emerald-particle-time} ticks
+								spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+								wait {@emerald-particle-time} ticks
+								clear {ao.loc.%player%}
+							if {@emerald-drop} is true:
+								drop {@emerald-amount} {@emerald-reward}
+								message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@emerald-amount} {@emerald-reward} dropped." to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							if {@emerald-give} is true:
+								give {@emerald-amount} {@emerald-reward} to the player
+								message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% was given {@emerald-amount} {@emerald-reward}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							if {@emerald-remove-money} is true:
+								remove {@emerald-amount} from the player's account
+								if {ao::config::dollar-sign-before} is true:
+									message "&c&l-${@emerald-amount}"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% had ${@emerald-amount} removed" to "Advanced Ores/log.log"
+								else:
+									message "&c&l-{@emerald-amount}$"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% had {@emerald-amount}$ removed" to "Advanced Ores/log.log"
+							if {@emerald-add-money} is true:
+								add {@emerald-amount} to the player's account
+								if {ao::config::dollar-sign-before} is true:
+									message "%{ao::messages::message}% ${@emerald-amount} %{ao::messages::messagepart2}%"
+									if {@emerald-broadcast} is true:
+										broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@emerald-amount} %{ao::messages::broadcastpart2}%"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received ${@emerald-amount}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@emerald-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+								else:
+									message "%{ao::messages::message}% {@emerald-amount}$ %{ao::messages::messagepart2}%"
+									if {@emerald-broadcast} is true:
+										broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount}$ %{ao::messages::broadcastpart2}%"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@emerald-amount}$" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							if {@emerald-command} is true:
+								execute console command "{@emerald-command-type}"
+								message "%{ao::messages::message}% {@emerald-name} %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-name} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-name}: {@emerald-command-type}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+					else:
+						if {@emerald-sound} is true:
+							play raw sound "{@emerald-sound-type}" at player with pitch {@emerald-sound-pitch} volume {@emerald-sound-volume}
+						if {@emerald-remove-effect} is true:
+							remove {@emerald-remove-effect-type} from the player
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@emerald-remove-effect-type} removed" to "Advanced Ores/log.log"
+						if {@emerald-remove-all-effects} is true:
+							execute console command "effect %player% clear"
+						if {@emerald-give-effect} is true:
+							if {@emerald-give-effect-no-stack} is true:
+								if player does not have {@emerald-give-effect-type}:
+									apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							else:
+								apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@emerald-firework} is true:
+							launch {@emerald-firework-type} firework colored {@emerald-firework-color} at player timed 1
+						if {@emerald-particle} is true:
+							set {ao.loc.%player%} to location
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							clear {ao.loc.%player%}
+						if {@emerald-drop} is true:
+							drop {@emerald-amount} {@emerald-reward}
+							message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@emerald-amount} {@emerald-reward} dropped." to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@emerald-give} is true:
+							give {@emerald-amount} {@emerald-reward} to the player
+							message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% was given {@emerald-amount} {@emerald-reward}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@emerald-remove-money} is true:
+							remove {@emerald-amount} from the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "&c&l-${@emerald-amount}"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had ${@emerald-amount} removed" to "Advanced Ores/log.log"
+							else:
+								message "&c&l-{@emerald-amount}$"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@emerald-amount}$ removed" to "Advanced Ores/log.log"
+						if {@emerald-add-money} is true:
+							add {@emerald-amount} to the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "%{ao::messages::message}% ${@emerald-amount} %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@emerald-amount} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received ${@emerald-amount}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@emerald-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							else:
+								message "%{ao::messages::message}% {@emerald-amount}$ %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount}$ %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-amount}$" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@emerald-command} is true:
+							execute console command "{@emerald-command-type}"
+							message "%{ao::messages::message}% {@emerald-name} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-name} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@emerald-name}: {@emerald-command-type}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+	else:
+		player has permission "{@emerald-permission}" or "ao.*" or "ao.player.*":
+			chance of {@emerald-chance}:
+				if {ao::config::block-creative} is true:
+					player's gamemode is not creative:
+						if {@emerald-sound} is true:
+							play raw sound "{@emerald-sound-type}" at player with pitch {@emerald-sound-pitch} volume {@emerald-sound-volume}
+						if {@emerald-remove-effect} is true:
+							remove {@emerald-remove-effect-type} from the player
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@emerald-remove-effect-type} removed" to "Advanced Ores/log.log"
+						if {@emerald-remove-all-effects} is true:
+							execute console command "effect %player% clear"
+						if {@emerald-give-effect} is true:
+							if {@emerald-give-effect-no-stack} is true:
+								if player does not have {@emerald-give-effect-type}:
+									apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							else:
+								apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@emerald-firework} is true:
+							launch {@emerald-firework-type} firework colored {@emerald-firework-color} at player timed 1
+						if {@emerald-particle} is true:
+							set {ao.loc.%player%} to location
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+							wait {@emerald-particle-time} ticks
+							clear {ao.loc.%player%}
+						if {@emerald-drop} is true:
+							drop {@emerald-amount} {@emerald-reward}
+							message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@emerald-amount} {@emerald-reward} dropped." to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@emerald-give} is true:
+							give {@emerald-amount} {@emerald-reward} to the player
+							message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% was given {@emerald-amount} {@emerald-reward}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@emerald-remove-money} is true:
+							remove {@emerald-amount} from the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "&c&l-${@emerald-amount}"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had ${@emerald-amount} removed" to "Advanced Ores/log.log"
+							else:
+								message "&c&l-{@emerald-amount}$"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@emerald-amount}$ removed" to "Advanced Ores/log.log"
+						if {@emerald-add-money} is true:
+							add {@emerald-amount} to the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "%{ao::messages::message}% ${@emerald-amount} %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@emerald-amount} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received ${@emerald-amount}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@emerald-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							else:
+								message "%{ao::messages::message}% {@emerald-amount}$ %{ao::messages::messagepart2}%"
+								if {@emerald-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount}$ %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-amount}$" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@emerald-command} is true:
+							execute console command "{@emerald-command-type}"
+							message "%{ao::messages::message}% {@emerald-name} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-name} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@emerald-name}: {@emerald-command-type}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+				else:
+					if {@emerald-sound} is true:
+						play raw sound "{@emerald-sound-type}" at player with pitch {@emerald-sound-pitch} volume {@emerald-sound-volume}
+					if {@emerald-remove-effect} is true:
+						remove {@emerald-remove-effect-type} from the player
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% had {@emerald-remove-effect-type} removed" to "Advanced Ores/log.log"
+					if {@emerald-remove-all-effects} is true:
+						execute console command "effect %player% clear"
+					if {@emerald-give-effect} is true:
+						if {@emerald-give-effect-no-stack} is true:
+							if player does not have {@emerald-give-effect-type}:
+								apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						else:
+							apply {@emerald-give-effect-type} to the player for {@emerald-give-effect-time}
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@emerald-give-effect-type} for {@emerald-give-effect-time}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-give-effect-type} for {@emerald-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+					if {@emerald-firework} is true:
+						launch {@emerald-firework-type} firework colored {@emerald-firework-color} at player timed 1
+					if {@emerald-particle} is true:
+						set {ao.loc.%player%} to location
+						spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+						wait {@emerald-particle-time} ticks
+						spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+						wait {@emerald-particle-time} ticks
+						spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+						wait {@emerald-particle-time} ticks
+						spawn 5 of particle {@emerald-particle-type} at {ao.loc.%player%}
+						wait {@emerald-particle-time} ticks
+						clear {ao.loc.%player%}
+					if {@emerald-drop} is true:
+						drop {@emerald-amount} {@emerald-reward}
+						message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+						if {@emerald-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% had {@emerald-amount} {@emerald-reward} dropped." to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+					if {@emerald-give} is true:
+						give {@emerald-amount} {@emerald-reward} to the player
+						message "%{ao::messages::message}% {@emerald-amount} {@emerald-reward} %{ao::messages::messagepart2}%"
+						if {@emerald-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount} {@emerald-reward} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% was given {@emerald-amount} {@emerald-reward}" to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount} {@emerald-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+					if {@emerald-remove-money} is true:
+						remove {@emerald-amount} from the player's account
+						if {ao::config::dollar-sign-before} is true:
+							message "&c&l-${@emerald-amount}"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had ${@emerald-amount} removed" to "Advanced Ores/log.log"
+						else:
+							message "&c&l-{@emerald-amount}$"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@emerald-amount}$ removed" to "Advanced Ores/log.log"
+					if {@emerald-add-money} is true:
+						add {@emerald-amount} to the player's account
+						if {ao::config::dollar-sign-before} is true:
+							message "%{ao::messages::message}% ${@emerald-amount} %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@emerald-amount} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received ${@emerald-amount}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@emerald-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						else:
+							message "%{ao::messages::message}% {@emerald-amount}$ %{ao::messages::messagepart2}%"
+							if {@emerald-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-amount}$ %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@emerald-amount}$" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+					if {@emerald-command} is true:
+						execute console command "{@emerald-command-type}"
+						message "%{ao::messages::message}% {@emerald-name} %{ao::messages::messagepart2}%"
+						if {@emerald-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@emerald-name} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% received {@emerald-name}: {@emerald-command-type}" to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@emerald-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+on mine of nether quartz ore:
+	if {ao::config::excluderegion} is true:
+# Figure the cancel out ... no breaking ores outside of regions
+		if "%region at player%" contains "{ao::config::excluded-regions}":
+			cancel event
+		else:
+			player has permission "{@quartz-permission}" or "ao.*" or "ao.player.*":
+				chance of {@quartz-chance}:
+					if {ao::config::block-creative} is true:
+						player's gamemode is not creative:
+							if {@quartz-sound} is true:
+								play raw sound "{@quartz-sound-type}" at player with pitch {@quartz-sound-pitch} volume {@quartz-sound-volume}
+							if {@quartz-remove-effect} is true:
+								remove {@quartz-remove-effect-type} from the player
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@quartz-remove-effect-type} removed" to "Advanced Ores/log.log"
+							if {@quartz-remove-all-effects} is true:
+								execute console command "effect %player% clear"
+							if {@quartz-give-effect} is true:
+								if {@quartz-give-effect-no-stack} is true:
+									if player does not have {@quartz-give-effect-type}:
+										apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+										if {ao::config::logrewards} is true:
+											log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+										if {ao.notifyreward.%player%} is true:
+											loop all players:
+												if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+													send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+											stop
+								else:
+									apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							if {@quartz-firework} is true:
+								launch {@quartz-firework-type} firework colored {@quartz-firework-color} at player timed 1
+							if {@quartz-particle} is true:
+								set {ao.loc.%player%} to location
+								spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+								wait {@quartz-particle-time} ticks
+								spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+								wait {@quartz-particle-time} ticks
+								spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+								wait {@quartz-particle-time} ticks
+								spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+								wait {@quartz-particle-time} ticks
+								clear {ao.loc.%player%}
+							if {@quartz-drop} is true:
+								drop {@quartz-amount} {@quartz-reward}
+								message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@quartz-amount} {@quartz-reward} dropped." to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							if {@quartz-give} is true:
+								give {@quartz-amount} {@quartz-reward} to the player
+								message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% was given {@quartz-amount} {@quartz-reward}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							if {@quartz-remove-money} is true:
+								remove {@quartz-amount} from the player's account
+								if {ao::config::dollar-sign-before} is true:
+									message "&c&l-${@quartz-amount}"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% had ${@quartz-amount} removed" to "Advanced Ores/log.log"
+								else:
+									message "&c&l-{@quartz-amount}$"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% had {@quartz-amount}$ removed" to "Advanced Ores/log.log"
+							if {@quartz-add-money} is true:
+								add {@quartz-amount} to the player's account
+								if {ao::config::dollar-sign-before} is true:
+									message "%{ao::messages::message}% ${@quartz-amount} %{ao::messages::messagepart2}%"
+									if {@quartz-broadcast} is true:
+										broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@quartz-amount} %{ao::messages::broadcastpart2}%"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received ${@quartz-amount}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@quartz-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+								else:
+									message "%{ao::messages::message}% {@quartz-amount}$ %{ao::messages::messagepart2}%"
+									if {@quartz-broadcast} is true:
+										broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount}$ %{ao::messages::broadcastpart2}%"
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@quartz-amount}$" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							if {@quartz-command} is true:
+								execute console command "{@quartz-command-type}"
+								message "%{ao::messages::message}% {@quartz-name} %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-name} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-name}: {@quartz-command-type}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+					else:
+						if {@quartz-sound} is true:
+							play raw sound "{@quartz-sound-type}" at player with pitch {@quartz-sound-pitch} volume {@quartz-sound-volume}
+						if {@quartz-remove-effect} is true:
+							remove {@quartz-remove-effect-type} from the player
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@quartz-remove-effect-type} removed" to "Advanced Ores/log.log"
+						if {@quartz-remove-all-effects} is true:
+							execute console command "effect %player% clear"
+						if {@quartz-give-effect} is true:
+							if {@quartz-give-effect-no-stack} is true:
+								if player does not have {@quartz-give-effect-type}:
+									apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							else:
+								apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@quartz-firework} is true:
+							launch {@quartz-firework-type} firework colored {@quartz-firework-color} at player timed 1
+						if {@quartz-particle} is true:
+							set {ao.loc.%player%} to location
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							clear {ao.loc.%player%}
+						if {@quartz-drop} is true:
+							drop {@quartz-amount} {@quartz-reward}
+							message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@quartz-amount} {@quartz-reward} dropped." to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@quartz-give} is true:
+							give {@quartz-amount} {@quartz-reward} to the player
+							message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% was given {@quartz-amount} {@quartz-reward}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@quartz-remove-money} is true:
+							remove {@quartz-amount} from the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "&c&l-${@quartz-amount}"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had ${@quartz-amount} removed" to "Advanced Ores/log.log"
+							else:
+								message "&c&l-{@quartz-amount}$"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@quartz-amount}$ removed" to "Advanced Ores/log.log"
+						if {@quartz-add-money} is true:
+							add {@quartz-amount} to the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "%{ao::messages::message}% ${@quartz-amount} %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@quartz-amount} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received ${@quartz-amount}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@quartz-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							else:
+								message "%{ao::messages::message}% {@quartz-amount}$ %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount}$ %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-amount}$" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@quartz-command} is true:
+							execute console command "{@quartz-command-type}"
+							message "%{ao::messages::message}% {@quartz-name} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-name} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@quartz-name}: {@quartz-command-type}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+	else:
+		player has permission "{@quartz-permission}" or "ao.*" or "ao.player.*":
+			chance of {@quartz-chance}:
+				if {ao::config::block-creative} is true:
+					player's gamemode is not creative:
+						if {@quartz-sound} is true:
+							play raw sound "{@quartz-sound-type}" at player with pitch {@quartz-sound-pitch} volume {@quartz-sound-volume}
+						if {@quartz-remove-effect} is true:
+							remove {@quartz-remove-effect-type} from the player
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@quartz-remove-effect-type} removed" to "Advanced Ores/log.log"
+						if {@quartz-remove-all-effects} is true:
+							execute console command "effect %player% clear"
+						if {@quartz-give-effect} is true:
+							if {@quartz-give-effect-no-stack} is true:
+								if player does not have {@quartz-give-effect-type}:
+									apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+									if {ao::config::logrewards} is true:
+										log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+									if {ao.notifyreward.%player%} is true:
+										loop all players:
+											if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+												send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+										stop
+							else:
+								apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@quartz-firework} is true:
+							launch {@quartz-firework-type} firework colored {@quartz-firework-color} at player timed 1
+						if {@quartz-particle} is true:
+							set {ao.loc.%player%} to location
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+							wait {@quartz-particle-time} ticks
+							clear {ao.loc.%player%}
+						if {@quartz-drop} is true:
+							drop {@quartz-amount} {@quartz-reward}
+							message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@quartz-amount} {@quartz-reward} dropped." to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@quartz-give} is true:
+							give {@quartz-amount} {@quartz-reward} to the player
+							message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% was given {@quartz-amount} {@quartz-reward}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						if {@quartz-remove-money} is true:
+							remove {@quartz-amount} from the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "&c&l-${@quartz-amount}"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had ${@quartz-amount} removed" to "Advanced Ores/log.log"
+							else:
+								message "&c&l-{@quartz-amount}$"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% had {@quartz-amount}$ removed" to "Advanced Ores/log.log"
+						if {@quartz-add-money} is true:
+							add {@quartz-amount} to the player's account
+							if {ao::config::dollar-sign-before} is true:
+								message "%{ao::messages::message}% ${@quartz-amount} %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@quartz-amount} %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received ${@quartz-amount}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@quartz-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+							else:
+								message "%{ao::messages::message}% {@quartz-amount}$ %{ao::messages::messagepart2}%"
+								if {@quartz-broadcast} is true:
+									broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount}$ %{ao::messages::broadcastpart2}%"
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-amount}$" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						if {@quartz-command} is true:
+							execute console command "{@quartz-command-type}"
+							message "%{ao::messages::message}% {@quartz-name} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-name} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@quartz-name}: {@quartz-command-type}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+				else:
+					if {@quartz-sound} is true:
+						play raw sound "{@quartz-sound-type}" at player with pitch {@quartz-sound-pitch} volume {@quartz-sound-volume}
+					if {@quartz-remove-effect} is true:
+						remove {@quartz-remove-effect-type} from the player
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% had {@quartz-remove-effect-type} removed" to "Advanced Ores/log.log"
+					if {@quartz-remove-all-effects} is true:
+						execute console command "effect %player% clear"
+					if {@quartz-give-effect} is true:
+						if {@quartz-give-effect-no-stack} is true:
+							if player does not have {@quartz-give-effect-type}:
+								apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+								if {ao::config::logrewards} is true:
+									log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+								if {ao.notifyreward.%player%} is true:
+									loop all players:
+										if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+											send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+									stop
+						else:
+							apply {@quartz-give-effect-type} to the player for {@quartz-give-effect-time}
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@quartz-give-effect-type} for {@quartz-give-effect-time}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-give-effect-type} for {@quartz-give-effect-time} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+					if {@quartz-firework} is true:
+						launch {@quartz-firework-type} firework colored {@quartz-firework-color} at player timed 1
+					if {@quartz-particle} is true:
+						set {ao.loc.%player%} to location
+						spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+						wait {@quartz-particle-time} ticks
+						spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+						wait {@quartz-particle-time} ticks
+						spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+						wait {@quartz-particle-time} ticks
+						spawn 5 of particle {@quartz-particle-type} at {ao.loc.%player%}
+						wait {@quartz-particle-time} ticks
+						clear {ao.loc.%player%}
+					if {@quartz-drop} is true:
+						drop {@quartz-amount} {@quartz-reward}
+						message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+						if {@quartz-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% had {@quartz-amount} {@quartz-reward} dropped." to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+					if {@quartz-give} is true:
+						give {@quartz-amount} {@quartz-reward} to the player
+						message "%{ao::messages::message}% {@quartz-amount} {@quartz-reward} %{ao::messages::messagepart2}%"
+						if {@quartz-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount} {@quartz-reward} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% was given {@quartz-amount} {@quartz-reward}" to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount} {@quartz-reward} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+							stop
+					if {@quartz-remove-money} is true:
+						remove {@quartz-amount} from the player's account
+						if {ao::config::dollar-sign-before} is true:
+							message "&c&l-${@quartz-amount}"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had ${@quartz-amount} removed" to "Advanced Ores/log.log"
+						else:
+							message "&c&l-{@quartz-amount}$"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% had {@quartz-amount}$ removed" to "Advanced Ores/log.log"
+					if {@quartz-add-money} is true:
+						add {@quartz-amount} to the player's account
+						if {ao::config::dollar-sign-before} is true:
+							message "%{ao::messages::message}% ${@quartz-amount} %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% ${@quartz-amount} %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received ${@quartz-amount}" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% ${@quartz-amount} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+						else:
+							message "%{ao::messages::message}% {@quartz-amount}$ %{ao::messages::messagepart2}%"
+							if {@quartz-broadcast} is true:
+								broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-amount}$ %{ao::messages::broadcastpart2}%"
+							if {ao::config::logrewards} is true:
+								log "[%time%] %player% received {@quartz-amount}$" to "Advanced Ores/log.log"
+							if {ao.notifyreward.%player%} is true:
+								loop all players:
+									if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+										send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-amount}$ %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
+								stop
+					if {@quartz-command} is true:
+						execute console command "{@quartz-command-type}"
+						message "%{ao::messages::message}% {@quartz-name} %{ao::messages::messagepart2}%"
+						if {@quartz-broadcast} is true:
+							broadcast "%{ao::messages::broadcastplayercolor}%%player% %{ao::messages::broadcast}% {@quartz-name} %{ao::messages::broadcastpart2}%"
+						if {ao::config::logrewards} is true:
+							log "[%time%] %player% received {@quartz-name}: {@quartz-command-type}" to "Advanced Ores/log.log"
+						if {ao.notifyreward.%player%} is true:
+							loop all players:
+								if loop-player has permission "ao.staff.notify" or "ao.staff.*" or "ao.*":
+									send "%{ao::messages::rewardnotifier}% %player% %{ao::messages::rewardnotifierpart2}% {@quartz-name} %{ao::messages::locationcolor}%[%location%, %world%]" to loop-player
 							stop
