@@ -9,36 +9,16 @@ Support, Report Bugs, Suggest Features in the Issues Tab
 **Requirements:**
 
 Skript.jar
-
-For 1.7: https://dev.bukkit.org/projects/skript/files/779542/download
-
-For 1.8: http://republicansensei.com/Skript%201.7-1.8.jar
-
-For 1.9: http://republicansensei.com/Skript%201.9.jar
-
-For 1.10/1.11: https://github.com/bensku/Skript/releases
-
+For 1.7-1.8: http://republicansensei.com/Skript%201.7-1.8.jar
+For 1.9-1.11: https://github.com/bensku/Skript/releases
 
 WildSkript.jar
-
-For 1.7: https://dev.bukkit.org/projects/wildskript/files/814163/download
-
-For 1.8: http://republicansensei.com/WildSkript%201.7-1.8.jar
-
-For 1.9: http://republicansensei.com/WildSkript%201.9-1.10.jar
-
-For 1.10: http://republicansensei.com/WS%20Reborn%201.10.jar
-
-For 1.11: https://github.com/Shane1199/Advanced-Ores/releases/
-
+For 1.7-1.8: http://republicansensei.com/WildSkript%201.7-1.8.jar
+For 1.9-1.11: http://republicansensei.com/WildSkript%201.9-1.10-1.11.jar
 
 skQuery.jar
-
-For 1.7-1.9: http://republicansensei.com/SkQuery%201.7-1.8-1.9.jar
-
-For 1.10/1.11: https://github.com/TheLimeGlass/skquery
-
-
+For 1.7-1.8: http://republicansensei.com/SkQuery%201.7-1.8-1.9.jar
+For 1.9-1.11: https://www.spigotmc.org/resources/36631
 
 **Install Guide**
 
